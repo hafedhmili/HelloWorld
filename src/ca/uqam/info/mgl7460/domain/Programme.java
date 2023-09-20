@@ -17,7 +17,7 @@ public interface Programme {
     /**
      * retourne le nombre de crédits du programme
      */
-    public String getNombreCredits();
+    public int getNombreCredits();
     
     /**
      * Ajouter un cours à la liste de cours du programme

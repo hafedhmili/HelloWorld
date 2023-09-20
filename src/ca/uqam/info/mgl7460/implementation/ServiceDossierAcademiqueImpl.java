@@ -12,56 +12,52 @@ public class ServiceDossierAcademiqueImpl implements ServiceDossierAcademique {
 
     @Override
     public Etudiant creerEtudiant(String prenom, String nom, String codePermanent) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'creerEtudiant'");
+        return new EtudiantImpl(prenom, nom, codePermanent);
     }
 
     @Override
     public Programme creerProgramme(String codeProg, String titre, int nombreCredits) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'creerProgramme'");
+        return new ProgrammeImpl(codeProg, titre, nombreCredits);
     }
 
     @Override
     public Cours creerCours(String sigle, String titre, String description, int nombreCredits, Cours... prerequis) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'creerCours'");
+        Cours[] coursPrerequis = prerequis;
+        Cours nouveauCours = new CoursImpl(sigle,titre,description,nombreCredits);
+        for (int i=0; i < prerequis.length; i++) nouveauCours.ajouterPrerequis(coursPrerequis[i]);
+
+        return nouveauCours;
     }
 
     @Override
     public GroupeCours creerGroupeCours(Cours crs, int annee, Session session, String enseignant) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'creerGroupeCours'");
+        return new GroupeCoursImpl(crs, annee, session, enseignant);
     }
 
     @Override
     public Inscription inscrireEtudiantCours(Etudiant et, GroupeCours gpeCours) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inscrireEtudiantCours'");
+        return et.inscrireGroupeCours(gpeCours);
     }
 
     @Override
     public Etudiant inscrireEtudiantProgramme(Etudiant etud, Programme prog) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inscrireEtudiantProgramme'");
+        etud.inscrireProgramme(prog);
+        return etud;
     }
 
     @Override
     public void saisirNote(Etudiant etud, GroupeCours gpeCours, float note) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saisirNote'");
+        etud.setNoteGroupeCours(gpeCours, note);
     }
 
     @Override
     public float getMoyenne(Etudiant etud) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMoyenne'");
+        return etud.getMoyenneCumulative();
     }
 
     @Override
     public float getNombreCreditsCompletes(Etudiant etud) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNombreCreditsCompletes'");
+        return etud.getNombreCreditsReussis();
     }
 
     @Override

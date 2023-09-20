@@ -1,6 +1,5 @@
 package ca.uqam.info.mgl7460.implementation;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -69,8 +68,8 @@ public class GroupeCoursImpl implements GroupeCours{
         // first check is student has been registered
         Inscription inscription = inscriptions.get(etud);
         if (inscription == null) {
-            inscription = new InscriptionImpl(etud, this);
-            inscriptions.put(etud, inscription);
+            // delegate registration to Etudiant
+           return etud.inscrireGroupeCours(this);
         }
         return inscription;
     }
@@ -93,6 +92,16 @@ public class GroupeCoursImpl implements GroupeCours{
     @Override
     public boolean estInscrit(Etudiant etud) {
         return inscriptions.containsKey(etud);
+    }
+
+    /**
+     * cette méthode ne fait pas partie de l'interface publique. Elle a visibilité "package"
+     * Elle sert à "attacher" les inscriptions des deux côtés
+     * @param inscription
+     */
+
+    void ajouterInscription(Inscription inscription){
+        inscriptions.put(inscription.getEtudiant(),inscription);
     }
     
 }

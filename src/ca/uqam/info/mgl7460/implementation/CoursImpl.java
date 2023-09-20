@@ -18,6 +18,14 @@ public class CoursImpl implements Cours{
 
     private Collection<Cours> prerequis;
 
+    public CoursImpl(String sigle, String titre, String description,int nombreCredits){
+        this.sigle = sigle;
+        this.titre = titre;
+        this.description = description;
+        this.nombreCredits = nombreCredits;
+        prerequis = new HashSet<Cours>(3);
+    }
+
     @Override
     public String getSigle() {
         return sigle;

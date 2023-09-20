@@ -1,7 +1,6 @@
 package ca.uqam.info.mgl7460.implementation;
 
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 import ca.uqam.info.mgl7460.domain.Cours;
 import ca.uqam.info.mgl7460.domain.Etudiant;
@@ -76,11 +75,14 @@ public class EtudiantImpl implements Etudiant{
 
     @Override
     public Inscription inscrireGroupeCours(GroupeCours gpeCours) {
-       // ajouter l'inscription aux inscriptions du cours
-       Inscription inscription = gpeCours.inscrireEtudiant(this);
+       // créer l'inscription
+       Inscription inscription = new InscriptionImpl(this, gpeCours);
 
        // ajouter l'inscription aux inscriptions de l'étudiant
        inscriptions.put(gpeCours.getCours(), inscription);
+
+       // ajouter l'inscription au groupe cours
+       ((GroupeCoursImpl)gpeCours).ajouterInscription(inscription);
 
        return inscription;
     }
