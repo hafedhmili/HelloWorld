@@ -72,5 +72,12 @@ public interface GroupeCours {
      * @param   note    la note en question
      */
     public void setNoteEtudiant(Etudiant etud, float note);
+
+    /**
+     * retourne une chaine de caractères permettant d'identifier uniquement
+     * le groupe cours. C'est une concaténation de champs
+     * @return
+     */
+    public String getID();
     
 }

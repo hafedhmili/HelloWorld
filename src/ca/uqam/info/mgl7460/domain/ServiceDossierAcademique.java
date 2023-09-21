@@ -91,5 +91,33 @@ public interface ServiceDossierAcademique {
      * réaliser les différentes fonctions et les différents tests.
      */
     public void chargerDonnees();
+
+    /**
+     * retourne l'étudiant avec code <code>code</code>
+     * @param code
+     * @return
+     */
+    public Etudiant getEtudiantAvecCodePermanent(String code);
+
+    /**
+     * retourne le cours avcec sigle <code>sigle</code>
+     * @param sigle
+     * @return
+     */
+    public Cours getCoursAvecSigle(String sigle);
+
+    /**
+     * retourne le programme avec code <code>code</code>
+     * @param code
+     * @return
+     */
+    public Programme getProgrammeAvecCode(String code);
+
+    /**
+     * retourne le groupe cours avec code <code>code</code>
+     * @param code
+     * @return
+     */
+    public GroupeCours getGroupeCoursAvecCode(String code);
     
 }

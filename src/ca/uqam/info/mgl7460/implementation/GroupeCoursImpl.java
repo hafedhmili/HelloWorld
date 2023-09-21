@@ -103,5 +103,10 @@ public class GroupeCoursImpl implements GroupeCours{
     void ajouterInscription(Inscription inscription){
         inscriptions.put(inscription.getEtudiant(),inscription);
     }
+
+    @Override
+    public String getID() {
+        return cours.getSigle()+"-"+annee+"-"+session;
+    }
     
 }

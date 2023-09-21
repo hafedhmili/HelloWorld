@@ -68,8 +68,8 @@ public class EtudiantImpl implements Etudiant{
     public float getMoyenneCumulative() {
         // on calcule la somme pondérée de note * nombre de crédits pour chaque cours ayant une note /= 0, puis on divise par
         // le nombre de credits (y compris non réussis).
-        double sommePonderee = inscriptions.values().stream().filter(inscription -> (inscription.getNoteNumerique()!=0.0f)).map(inscription -> (inscription.getNoteNumerique()*inscription.getGroupeCours().getCours().getNombreCredits())).mapToDouble(null).sum();
-        int creditsSuivis = inscriptions.values().stream().filter(inscription -> (inscription.getNoteNumerique()!=0.0f)).map(inscription -> (inscription.getGroupeCours().getCours().getNombreCredits())).mapToInt(null).sum();
+        double sommePonderee = inscriptions.values().stream().filter(inscription -> (inscription.getNoteNumerique()!=0.0f)).map(inscription -> (inscription.getNoteNumerique()*inscription.getGroupeCours().getCours().getNombreCredits())).mapToDouble((x)->x).sum();
+        int creditsSuivis = inscriptions.values().stream().filter(inscription -> (inscription.getNoteNumerique()!=0.0f)).map(inscription -> (inscription.getGroupeCours().getCours().getNombreCredits())).mapToInt((x) -> x).sum();
         return (float)(sommePonderee/creditsSuivis);
     }
 
