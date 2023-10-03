@@ -4,8 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import ca.uqam.info.mgl7460.domain.Cours;
+import ca.uqam.info.mgl7460.domain.Etudiant;
+import ca.uqam.info.mgl7460.domain.GroupeCours;
 import ca.uqam.info.mgl7460.domain.Programme;
 import ca.uqam.info.mgl7460.domain.ServiceDossierAcademique;
+import ca.uqam.info.mgl7460.domain.Session;
 import ca.uqam.info.mgl7460.implementation.ServiceDossierAcademiqueImpl;
 
 public class DATestCreation {
@@ -28,8 +32,33 @@ public class DATestCreation {
 
     @Test
     public void testCreationEtudiant() {
-        String prenom = 
+        String prenom = "Martin", nom = "Bourgeois", codePermanent = "BOUM12079901";
+        Etudiant etud = serviceDA.creerEtudiant(prenom,nom, codePermanent);
+        Assertions.assertEquals(etud.getPrenom(),prenom);
+        Assertions.assertEquals(etud.getNom(), nom);
+        Assertions.assertEquals(etud.getCodePermanent(),codePermanent);
+        Assertions.assertEquals(serviceDA.getEtudiantAvecCodePermanent(codePermanent),etud, "Cannot retrieve student by code permanent");       
     }
 
-    
+    @Test
+    public void testCreationCours() {
+        String sigle = "INF1120", titre = "Programmation 1", description = "Acquérir une méthode de développement";
+        Cours inf1120 = serviceDA.creerCours(sigle, titre, description, 3);
+        Assertions.assertEquals(inf1120.getSigle(),sigle, "Mauvais sigle");
+        Assertions.assertEquals(inf1120.getTitre(), titre,"Mauvais titre");
+        Assertions.assertEquals(inf1120.getDescription(), description,"Mauvaise description");
+        Assertions.assertEquals(serviceDA.getCoursAvecSigle(sigle),inf1120, "Ne peut accéder aux cours par sigle");       
+    }
+
+    @Test
+    public void testCreationGroupeCours() {
+        String sigle = "INF1120", titre = "Programmation 1", description = "Acquérir une méthode de développement";
+        Cours inf1120 = serviceDA.creerCours(sigle, titre, description, 3);
+        int annee = 2023; Session session = Session.Automne; String professeur = "Tournesol";
+        GroupeCours groupeCours = serviceDA.creerGroupeCours(inf1120, annee, session, professeur);
+        Assertions.assertEquals(groupeCours.getCours(),inf1120, "GroupeCours non associé au bon cours");
+        Assertions.assertEquals(groupeCours.getAnnee(),annee,"Groupe cours non associé à la bonne année");
+        Assertions.assertEquals(groupeCours.getSession(), session,"Groupe cours associé à la mauvaise session");
+        Assertions.assertEquals(groupeCours.getEnseignant(),professeur, "Non attribué au bon professeur");       
+    }
 }
