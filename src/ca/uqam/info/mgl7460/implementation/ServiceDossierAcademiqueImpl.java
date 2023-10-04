@@ -41,12 +41,16 @@ public class ServiceDossierAcademiqueImpl implements ServiceDossierAcademique {
 
     @Override
     public Etudiant creerEtudiant(String prenom, String nom, String codePermanent) {
-        return new EtudiantImpl(prenom, nom, codePermanent);
+        Etudiant etudiant = new EtudiantImpl(prenom, nom, codePermanent);
+        etudiants.put(codePermanent,etudiant);
+        return etudiant;
     }
 
     @Override
     public Programme creerProgramme(String codeProg, String titre, int nombreCredits) {
-        return new ProgrammeImpl(codeProg, titre, nombreCredits);
+        Programme prog = new ProgrammeImpl(codeProg, titre, nombreCredits);
+        programmes.put(codeProg,prog);
+        return prog;
     }
 
     @Override
@@ -55,12 +59,17 @@ public class ServiceDossierAcademiqueImpl implements ServiceDossierAcademique {
         Cours nouveauCours = new CoursImpl(sigle,titre,description,nombreCredits);
         for (int i=0; i < prerequis.length; i++) nouveauCours.ajouterPrerequis(coursPrerequis[i]);
 
+        cours.put(sigle,nouveauCours);
+
         return nouveauCours;
     }
 
     @Override
     public GroupeCours creerGroupeCours(Cours crs, int annee, Session session, String enseignant) {
-        return new GroupeCoursImpl(crs, annee, session, enseignant);
+        GroupeCours gpeCours = new GroupeCoursImpl(crs, annee, session, enseignant);
+        String key = crs.getSigle()+"-"+annee+"-"+session;
+        groupesCours.put(key,gpeCours);
+        return gpeCours;
     }
 
     @Override
@@ -99,34 +108,23 @@ public class ServiceDossierAcademiqueImpl implements ServiceDossierAcademique {
     }
     
     void creerEtudiants() {
-        Etudiant etudiant = creerEtudiant("Martin", "Bourgeois", "BOUM12079901");
-        etudiants.put(etudiant.getCodePermanent(),etudiant);
-
-        etudiant = creerEtudiant("Josée", "Cyr", "CYRJ05530301");
-        etudiants.put(etudiant.getCodePermanent(),etudiant);
-
-        etudiant = creerEtudiant("Mohamed", "Kabir", "KABM05080201");
-        etudiants.put(etudiant.getCodePermanent(),etudiant);
-
-        etudiant = creerEtudiant("Ange", "Diawo", "DIAA23580103");
-        etudiants.put(etudiant.getCodePermanent(),etudiant);
+        Etudiant 
+            etudiant = creerEtudiant("Martin", "Bourgeois", "BOUM12079901");
+            etudiant = creerEtudiant("Josée", "Cyr", "CYRJ05530301");
+            etudiant = creerEtudiant("Mohamed", "Kabir", "KABM05080201");
+            etudiant = creerEtudiant("Ange", "Diawo", "DIAA23580103");
     }
 
     void creerCours() {
         Cours inf1120 = creerCours(INF1120, "Programmation 1", "Acquérir une méthode de développement", 3);
-        cours.put(inf1120.getSigle(),inf1120);
 
         Cours inf2120 = creerCours(INF2120, "Programmation II", "Approfondir les concepts de la programmation OO", 3,inf1120);
-        cours.put(inf2120.getSigle(),inf2120);
 
         Cours inf3135 = creerCours(INF3135, "Construction et maintenance de logiciels", "Initier les étudiants à la programmation à l’aide d’un langage impératif et procédural.", 3,inf1120);
-        cours.put(inf3135.getSigle(),inf3135);
 
         Cours inf5151 = creerCours(INF5151, "Génie logiciel: analyse et modélisation", "Explorer les fondements et l’évolution des méthodes d’analyse", 3);
-        cours.put(inf5151.getSigle(),inf5151);
 
         Cours inf5153 = creerCours(INF5153, "Génie logiciel: conception", "Sensibiliser l’étudiant aux difficultés de la conception", 3, inf3135,inf5151);
-        cours.put(inf5153.getSigle(),inf5153);
     }
 
     void creerProgrammes() {
@@ -145,16 +143,8 @@ public class ServiceDossierAcademiqueImpl implements ServiceDossierAcademique {
             inf2120_hiv_2021 = creerGroupeCours(cours.get(INF2120),2021,Session.Hiver,null),
             inf2120_hiv_2022 = creerGroupeCours(cours.get(INF2120),2022,Session.Hiver,null),
             inf3135_aut_2021 = creerGroupeCours(cours.get(INF3135),2021,Session.Automne,null),
-            inf5151_hiv_2022 = creerGroupeCours(cours.get(INF5151),2022,Session.Hiver, ""),
+            inf5151_hiv_2022 = creerGroupeCours(cours.get(INF5151),2022,Session.Hiver, null),
             inf5153_aut_2022 = creerGroupeCours(cours.get(INF5151),2022,Session.Automne,null);
-
-            groupesCours.put(inf1120_aut_2020.getID(),inf1120_aut_2020);
-            groupesCours.put(inf1120_aut_2021.getID(), inf1120_aut_2021);
-            groupesCours.put(inf2120_hiv_2021.getID(),inf2120_hiv_2021);
-            groupesCours.put(inf2120_hiv_2022.getID(),inf2120_hiv_2022);
-            groupesCours.put(inf3135_aut_2021.getID(),inf3135_aut_2021);
-            groupesCours.put(inf5151_hiv_2022.getID(),inf5151_hiv_2022);
-            groupesCours.put(inf5153_aut_2022.getID(),inf5153_aut_2022);
     }
 
     void inscrireEtudiants() {
