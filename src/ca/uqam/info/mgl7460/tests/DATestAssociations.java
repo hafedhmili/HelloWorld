@@ -18,10 +18,6 @@ import ca.uqam.info.mgl7460.implementation.ServiceDossierAcademiqueImpl;;
 public class DATestAssociations {
 private static ServiceDossierAcademique serviceDA= null;
 
-    @BeforeAll
-    public void initialiseServiceDossierAcademique() {
-        serviceDA = new ServiceDossierAcademiqueImpl();
-    }
 
     @Test
     void testLienProgrammeCours() {
@@ -45,7 +41,8 @@ private static ServiceDossierAcademique serviceDA= null;
     }
 
     @BeforeAll
-    public void creerDonneesDeTest() {
+    static public void creerDonneesDeTest() {
+        serviceDA = new ServiceDossierAcademiqueImpl();
         Cours 
             inf1120 = serviceDA.creerCours("INF1120", "Programmation 1", "Acquérir une méthode de développement", 3),
             inf2120 = serviceDA.creerCours("INF2120", "Programmation II", "Approfondir les concepts de la programmation OO", 3,inf1120),
@@ -101,7 +98,7 @@ private static ServiceDossierAcademique serviceDA= null;
         Assertions.assertTrue(serviceDA.getGroupeCoursAvecCode("INF1120-2020-Automne").estInscrit(martin), "Martin n'a pas été inscrit");
         
         // tester inscription via <code>GroupeCours</code>
-        Assertions.assertTrue(serviceDA.getGroupeCoursAvecCode("INF1120-2020-Automne").estInscrit(martin), "Martin n'a pas été inscrit");
+        Assertions.assertTrue(serviceDA.getGroupeCoursAvecCode("INF2120-2021-Hiver").estInscrit(martin), "Martin n'a pas été inscrit");
     }
 
     @Test
@@ -130,7 +127,7 @@ private static ServiceDossierAcademique serviceDA= null;
                 
 
         Etudiant martin = serviceDA.getEtudiantAvecCodePermanent("BOUM12079901"),
-            josee = serviceDA.getEtudiantAvecCodePermanent("BOUM12079901");
+            josee = serviceDA.getEtudiantAvecCodePermanent("CYRJ05530301");
     
         // attribuer les notes de martin
 
@@ -139,14 +136,15 @@ private static ServiceDossierAcademique serviceDA= null;
         martin.setNoteGroupeCours(serviceDA.getGroupeCoursAvecCode("INF3135-2021-Automne"),2.7f);
         martin.setNoteGroupeCours(serviceDA.getGroupeCoursAvecCode("INF5151-2022-Hiver"),4.0f);
 
+        // verifier que josee est inscrite au cours en question
+        Assertions.assertTrue(serviceDA.getGroupeCoursAvecCode("INF1120-2021-Automne").estInscrit(josee),"Oops! josée n'est pas inscrite dans le INF1120-2021-Automne");
         // attribuer les notes de josee
         josee.setNoteGroupeCours(serviceDA.getGroupeCoursAvecCode("INF1120-2021-Automne"),4.3f);
         josee.setNoteGroupeCours(serviceDA.getGroupeCoursAvecCode("INF2120-2022-Hiver"),4.3f);
 
         // tester moyenne cumulative de martin
-        Assertions.assertEquals(martin.getMoyenneCumulative(),3.425,"Moyenne de Martin mal calculée");
-
+        Assertions.assertEquals(3.425f, martin.getMoyenneCumulative(),"Moyenne cumulative de martin mal calculee");
         // test moyenne cumulative de josee
-        Assertions.assertEquals(josee.getMoyenneCumulative(),4.3f, "Moyenne cumulative de josee mal calculee");
+        Assertions.assertEquals(4.3f, josee.getMoyenneCumulative(),"Moyenne cumulative de josee mal calculee");
     }
 }

@@ -17,7 +17,7 @@ public class DATestCreation {
     private static ServiceDossierAcademique serviceDA= null;
 
     @BeforeAll
-    public void initialiseServiceDossierAcademique() {
+    public static void initialiseServiceDossierAcademique() {
         serviceDA = new ServiceDossierAcademiqueImpl();
     }
 
@@ -34,20 +34,20 @@ public class DATestCreation {
     public void testCreationEtudiant() {
         String prenom = "Martin", nom = "Bourgeois", codePermanent = "BOUM12079901";
         Etudiant etud = serviceDA.creerEtudiant(prenom,nom, codePermanent);
-        Assertions.assertEquals(etud.getPrenom(),prenom);
-        Assertions.assertEquals(etud.getNom(), nom);
-        Assertions.assertEquals(etud.getCodePermanent(),codePermanent);
-        Assertions.assertEquals(serviceDA.getEtudiantAvecCodePermanent(codePermanent),etud, "Cannot retrieve student by code permanent");       
+        Assertions.assertEquals(prenom, etud.getPrenom());
+        Assertions.assertEquals(nom,etud.getNom());
+        Assertions.assertEquals(codePermanent, etud.getCodePermanent());
+        Assertions.assertEquals(etud, serviceDA.getEtudiantAvecCodePermanent(codePermanent),"Cannot retrieve student by code permanent");       
     }
 
     @Test
     public void testCreationCours() {
         String sigle = "INF1120", titre = "Programmation 1", description = "Acquérir une méthode de développement";
         Cours inf1120 = serviceDA.creerCours(sigle, titre, description, 3);
-        Assertions.assertEquals(inf1120.getSigle(),sigle, "Mauvais sigle");
-        Assertions.assertEquals(inf1120.getTitre(), titre,"Mauvais titre");
-        Assertions.assertEquals(inf1120.getDescription(), description,"Mauvaise description");
-        Assertions.assertEquals(serviceDA.getCoursAvecSigle(sigle),inf1120, "Ne peut accéder aux cours par sigle");       
+        Assertions.assertEquals(sigle, inf1120.getSigle(),"Mauvais sigle");
+        Assertions.assertEquals(titre,inf1120.getTitre(), "Mauvais titre");
+        Assertions.assertEquals(description,inf1120.getDescription(), "Mauvaise description");
+        Assertions.assertEquals(inf1120, serviceDA.getCoursAvecSigle(sigle),"Ne peut accéder aux cours par sigle");       
     }
 
     @Test
@@ -56,9 +56,9 @@ public class DATestCreation {
         Cours inf1120 = serviceDA.creerCours(sigle, titre, description, 3);
         int annee = 2023; Session session = Session.Automne; String professeur = "Tournesol";
         GroupeCours groupeCours = serviceDA.creerGroupeCours(inf1120, annee, session, professeur);
-        Assertions.assertEquals(groupeCours.getCours(),inf1120, "GroupeCours non associé au bon cours");
-        Assertions.assertEquals(groupeCours.getAnnee(),annee,"Groupe cours non associé à la bonne année");
-        Assertions.assertEquals(groupeCours.getSession(), session,"Groupe cours associé à la mauvaise session");
-        Assertions.assertEquals(groupeCours.getEnseignant(),professeur, "Non attribué au bon professeur");       
+        Assertions.assertEquals(inf1120, groupeCours.getCours(), "GroupeCours non associé au bon cours");
+        Assertions.assertEquals(annee,groupeCours.getAnnee(),"Groupe cours non associé à la bonne année");
+        Assertions.assertEquals(session,groupeCours.getSession(), "Groupe cours associé à la mauvaise session");
+        Assertions.assertEquals(professeur, groupeCours.getEnseignant(),"Non attribué au bon professeur");       
     }
 }
