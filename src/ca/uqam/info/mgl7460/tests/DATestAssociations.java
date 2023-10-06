@@ -34,7 +34,7 @@ private static ServiceDossierAcademique serviceDA= null;
         Boolean found = false;
         Iterator<Cours> listeCoursMGL = mgl.getCours();
         while (listeCoursMGL.hasNext()) {
-            found = listeCoursMGL.next().equals(mgl7361) || found;
+            found = listeCoursMGL.next().equals(mgl7361) || found ;
          }
         Assertions.assertTrue(found,"On ne trouve pas un cours qui a été ajouté au programme");
         // Wow! c'est compliqué de savoir si un Cours est inclus dans un Programme!
