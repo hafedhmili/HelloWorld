@@ -3,6 +3,8 @@ package ca.uqam.info.mgl7460.tests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SuiteDisplayName;
 
 import ca.uqam.info.mgl7460.domain.Cours;
 import ca.uqam.info.mgl7460.domain.Etudiant;
@@ -46,6 +48,7 @@ public class DATestCreation {
         Cours inf1120 = serviceDA.creerCours(sigle, titre, description, 3);
         Assertions.assertEquals(sigle, inf1120.getSigle(),"Mauvais sigle");
         Assertions.assertEquals(titre,inf1120.getTitre(), "Mauvais titre");
+        
         Assertions.assertEquals(description,inf1120.getDescription(), "Mauvaise description");
         Assertions.assertEquals(inf1120, serviceDA.getCoursAvecSigle(sigle),"Ne peut accéder aux cours par sigle");       
     }
@@ -61,4 +64,5 @@ public class DATestCreation {
         Assertions.assertEquals(session,groupeCours.getSession(), "Groupe cours associé à la mauvaise session");
         Assertions.assertEquals(professeur, groupeCours.getEnseignant(),"Non attribué au bon professeur");       
     }
+
 }

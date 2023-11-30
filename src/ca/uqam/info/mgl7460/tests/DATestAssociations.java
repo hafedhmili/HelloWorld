@@ -5,6 +5,8 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SuiteDisplayName;
 
 import ca.uqam.info.mgl7460.domain.Cours;
 import ca.uqam.info.mgl7460.domain.Etudiant;
@@ -17,6 +19,7 @@ import ca.uqam.info.mgl7460.implementation.ServiceDossierAcademiqueImpl;;
 
 public class DATestAssociations {
 private static ServiceDossierAcademique serviceDA= null;
+
 
 
     @Test
